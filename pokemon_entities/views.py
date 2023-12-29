@@ -52,7 +52,7 @@ def show_all_pokemons(request):
         pokemons_on_page.append({
             'pokemon_id': pokemon.id,
             'img_url': pokemon.pokemon.image.url,
-            'title_ru': pokemon.pokemon.title,
+            'title_ru': pokemon.pokemon.title_ru,
         })
 
     return render(request, 'mainpage.html', context={
@@ -66,7 +66,7 @@ def show_pokemon(request, pokemon_id):
     #     pokemons = json.load(database)['pokemons']
 
     pokemon = PokemonEntity.objects.filter(id=pokemon_id).first()
-    print(request.build_absolute_uri(pokemon.pokemon.image.url))
+    # print(request.build_absolute_uri(pokemon.pokemon.image.url))
 
     if pokemon:
         requested_pokemon = pokemon
@@ -82,7 +82,9 @@ def show_pokemon(request, pokemon_id):
     )
 
     pokemon_view_information = {
-        "title_ru": requested_pokemon.pokemon.title,
+        "title_ru": requested_pokemon.pokemon.title_ru,
+        "title_en": requested_pokemon.pokemon.title_en,
+        "title_jp": requested_pokemon.pokemon.title_jp,
         "img_url": request.build_absolute_uri(requested_pokemon.pokemon.image.url),
         "description": requested_pokemon.description,
     }
