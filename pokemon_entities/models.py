@@ -5,7 +5,10 @@ class Pokemon(models.Model):
     title_ru = models.TextField(max_length=200)
     title_en = models.TextField(max_length=200)
     title_jp = models.TextField(max_length=200)
+    description = models.TextField(max_length=200, default="")
     image = models.ImageField(upload_to='pokemon', null=True)
+    prev_evolution = models.ForeignKey("Pokemon", null=True, blank=True, on_delete=models.SET_NULL,  related_name="evolves_from")
+    next_evolution = models.ForeignKey("Pokemon", null=True, blank=True, on_delete=models.SET_NULL, related_name="evolves_into")
 
     def __str__(self):
         return f"{self.title_ru}"
@@ -21,4 +24,6 @@ class PokemonEntity(models.Model):
     attack = models.IntegerField(default=5)
     defence = models.IntegerField(default=5)
     stamina = models.IntegerField(default=10)
-    description = models.TextField(max_length=200, default="")
+
+    def __str__(self):
+        return f"{self.pokemon.title_ru} - {self.id}"

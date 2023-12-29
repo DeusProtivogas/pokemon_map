@@ -65,12 +65,10 @@ def show_pokemon(request, pokemon_id):
     # with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
     #     pokemons = json.load(database)['pokemons']
 
-    pokemon = PokemonEntity.objects.filter(id=pokemon_id).first()
-    # print(request.build_absolute_uri(pokemon.pokemon.image.url))
+    requested_pokemon = PokemonEntity.objects.filter(id=pokemon_id).first()
+    # print("Evolve: ", requested_pokemon.pokemon.prev_evolution.id)
 
-    if pokemon:
-        requested_pokemon = pokemon
-    else:
+    if not requested_pokemon:
         return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
@@ -86,7 +84,12 @@ def show_pokemon(request, pokemon_id):
         "title_en": requested_pokemon.pokemon.title_en,
         "title_jp": requested_pokemon.pokemon.title_jp,
         "img_url": request.build_absolute_uri(requested_pokemon.pokemon.image.url),
-        "description": requested_pokemon.description,
+        "description": requested_pokemon.pokemon.description,
+        "previous_evolution": {
+            "pokemon_id": requested_pokemon.pokemon.prev_evolution.id,
+            "img_url": request.build_absolute_uri(requested_pokemon.pokemon.prev_evolution.image.url),
+            "title_ru": requested_pokemon.pokemon.prev_evolution.title_ru,
+        } if requested_pokemon.pokemon.prev_evolution else None,
     }
 
     return render(request, 'pokemon.html', context={
