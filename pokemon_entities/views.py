@@ -50,7 +50,7 @@ def show_all_pokemons(request):
     pokemons_on_page = []
     for pokemon in pokemons:
         pokemons_on_page.append({
-            'pokemon_id': pokemon.id,
+            'pokemon_id': pokemon.pokemon.id,
             'img_url': pokemon.pokemon.image.url,
             'title_ru': pokemon.pokemon.title_ru,
         })

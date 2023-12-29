@@ -3,9 +3,9 @@ from django.db import models  # noqa F401
 # your models here
 class Pokemon(models.Model):
     title_ru = models.TextField(max_length=200, verbose_name="Имя (Русское)")
-    title_en = models.TextField(max_length=200, verbose_name="Имя (Английское)")
-    title_jp = models.TextField(max_length=200, verbose_name="Имя (Японское)")
-    description = models.TextField(max_length=200, default="", verbose_name="Описание")
+    title_en = models.TextField(max_length=200, blank=True, verbose_name="Имя (Английское)")
+    title_jp = models.TextField(max_length=200, blank=True, verbose_name="Имя (Японское)")
+    description = models.TextField(max_length=200, blank=True, default="", verbose_name="Описание")
     image = models.ImageField(upload_to='pokemon', null=True, verbose_name="Картинка")
     prev_evolution = models.ForeignKey(
         "Pokemon",
