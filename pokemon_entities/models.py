@@ -19,3 +19,4 @@ class PokemonEntity(models.Model):
     attack = models.IntegerField(default=5)
     defence = models.IntegerField(default=5)
     stamina = models.IntegerField(default=10)
+    description = models.TextField(max_length=200, default="")

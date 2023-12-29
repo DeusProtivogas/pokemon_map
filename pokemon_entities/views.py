@@ -81,11 +81,12 @@ def show_pokemon(request, pokemon_id):
         request.build_absolute_uri(requested_pokemon.pokemon.image.url),
     )
 
-    pkmn = {
+    pokemon_view_information = {
         "title_ru": requested_pokemon.pokemon.title,
         "img_url": request.build_absolute_uri(requested_pokemon.pokemon.image.url),
+        "description": requested_pokemon.description,
     }
 
     return render(request, 'pokemon.html', context={
-        'map': folium_map._repr_html_(), 'pokemon': pkmn,
+        'map': folium_map._repr_html_(), 'pokemon': pokemon_view_information,
     })
