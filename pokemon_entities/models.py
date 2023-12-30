@@ -33,14 +33,6 @@ class Pokemon(models.Model):
         related_name="evolves_from",
         verbose_name="Из кого эволюционирует",
     )
-    next_evolution = models.ForeignKey(
-        "Pokemon",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="evolves_into",
-        verbose_name="В кого эволюционирует"
-    )
 
     def __str__(self):
         return f"{self.title_ru}"
