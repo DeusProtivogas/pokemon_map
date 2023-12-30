@@ -3,16 +3,16 @@ from django.db import models  # noqa F401
 
 class Pokemon(models.Model):
     title_ru = models.CharField(
-        max_length=200,
+        max_length=50,
         verbose_name="Имя (Русское)"
     )
     title_en = models.CharField(
-        max_length=200,
+        max_length=50,
         blank=True,
         verbose_name="Имя (Английское)"
     )
     title_jp = models.CharField(
-        max_length=200,
+        max_length=50,
         blank=True,
         verbose_name="Имя (Японское)"
     )
