@@ -62,13 +62,14 @@ def show_pokemon(request, pokemon_id):
     requested_pokemon = get_object_or_404(Pokemon, id=pokemon_id)
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    for pokemon_entity in requested_pokemon.pokemon_entities.all():
+    for pokemon_entity in requested_pokemon.entities.all():
         add_pokemon(
             folium_map, pokemon_entity.lat,
             pokemon_entity.lon,
             request.build_absolute_uri(pokemon_entity.pokemon.image.url),
         )
 
+    next_evolution = requested_pokemon.next_evolutions.first()
     pokemon_view_information = {
         "title_ru": requested_pokemon.title_ru,
         "title_en": requested_pokemon.title_en,
@@ -83,12 +84,12 @@ def show_pokemon(request, pokemon_id):
             "title_ru": requested_pokemon.prev_evolution.title_ru,
         } if requested_pokemon.prev_evolution else None,
         "next_evolution": {
-            "pokemon_id": requested_pokemon.next_evolution.first().id,
+            "pokemon_id": next_evolution.id,
             "img_url": request.build_absolute_uri(
-                requested_pokemon.next_evolution.first().image.url
+                next_evolution.image.url
             ),
-            "title_ru": requested_pokemon.next_evolution.first().title_ru,
-        } if requested_pokemon.next_evolution.first() else None,
+            "title_ru": next_evolution.title_ru,
+        } if next_evolution else None,
     }
 
     return render(request, 'pokemon.html', context={
